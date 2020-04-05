@@ -39,46 +39,21 @@ const App = () => {
   const [showPerson, setShowPerson] = useState(false);
   const [countPerson, setCountPerson] = useState(0);
 
+  const countPersonHandler = (count) => setCountPerson(count);
+
   const togglePersonHandler = () => {
     setShowPerson(!showPerson ? true : false);
   };
 
-  const countPersonHandler = (count) => {
-    setCountPerson(count);
-  };
-
-  const personDisplay = () => {
-    if (showPerson) {
-      return <Person count={(count) => countPersonHandler(count)} />;
-    }
-    return null;
-  };
-
-  const classes = [];
-  if (countPerson <= 4 && !(countPerson <= 1)) {
-    classes.push('red');
-  }
-  if (countPerson <= 2 && !(countPerson <= 1)) {
-    classes.push('bold');
-  }
+  const personDisplay = () =>
+    showPerson ? <Person count={countPersonHandler} /> : null;
 
   const renderSpan = (countPerson) => {
-    // if (countPerson <= 4 && !(countPerson <= 1)) {
-    //   Span = styled.span`
-    //     color: red;
-    //   `;
-    // }
-
-    // if (countPerson <= 2 && !(countPerson <= 1)) {
-    //   Span = styled.span`
-    //     color: red;
-    //     background-color: pink;
-    //     font-weight: bold;
-    //   `;
-    // }
-
+    // handler span by count
     return <span>This is really working</span>;
   };
+
+  console.log(countPerson);
 
   return (
     <>
