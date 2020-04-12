@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import '../../css/Person.css';
 import Person from './Person';
 import styled from 'styled-components';
 
@@ -39,21 +39,26 @@ const App = () => {
   const [showPerson, setShowPerson] = useState(false);
   const [countPerson, setCountPerson] = useState(0);
 
-  const countPersonHandler = (count) => setCountPerson(count);
+  const countPersonHandler = (count) => {
+    setCountPerson(count);
+  };
 
   const togglePersonHandler = () => {
     setShowPerson(!showPerson ? true : false);
   };
 
-  const personDisplay = () =>
-    showPerson ? <Person count={countPersonHandler} /> : null;
+  const personDisplay = () => {
+    if (!showPerson) {
+      return null;
+    }
+
+    return <Person count={countPersonHandler} />;
+  };
 
   const renderSpan = (countPerson) => {
     // handler span by count
-    return <span>This is really working</span>;
+    return <span>This is really working {countPerson}</span>;
   };
-
-  console.log(countPerson);
 
   return (
     <>

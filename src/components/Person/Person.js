@@ -13,6 +13,18 @@ const Person = ({ count }) => {
   const getPersons = usePersons();
   const [persons, setPersons] = useState([]);
 
+  // useEffect(() => {
+  //   console.log('person use test');
+
+  //   setTimeout(() => {
+  //     alert('save data');
+  //   }, 1000);
+
+  //   return () => {
+  //     console.log('run in effect');
+  //   };
+  // }, []);
+
   useEffect(() => {
     if (!persons.length) {
       setPersons(getPersons);
@@ -25,8 +37,6 @@ const Person = ({ count }) => {
     });
 
     setPersons(currentPersons);
-
-    count(persons.length);
   };
 
   const inputChangeHandler = (e, id) => {
@@ -46,12 +56,15 @@ const Person = ({ count }) => {
   };
 
   const renderPerson = () => {
+    count(persons.length);
+
     return persons.map((person) => {
       return (
         <PersonItem
           click={() => deletePersonHandler(person.id)}
           name={person.name}
           like={person.like}
+          personLength={persons.length}
           key={person.id}
           change={(e) => inputChangeHandler(e, person.id)}
         />
