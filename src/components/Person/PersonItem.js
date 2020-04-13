@@ -1,30 +1,20 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useContext } from 'react';
 import PropTypes from 'prop-types';
-import Aux from '../../hoc/Aux';
-import withClass from '../../hoc/withClass';
+import Aux from './hoc/Aux';
+import withClass from './hoc/withClass';
 import AuthContext from './context/auth-context';
 
-const PersonItem = ({
-  isAuthActive,
-  name,
-  like,
-  click,
-  change,
-  personLength,
-}) => {
-  let inputElementRef = useRef();
+const PersonItem = ({ name, like, click, change, personLength }) => {
+  const inputElementRef = useRef();
+  const isAuth = useContext(AuthContext);
 
   useEffect(() => {
     inputElementRef.current.focus();
-  });
+  }, []);
 
   return (
     <Aux>
-      <AuthContext.Consumer>
-        {(context) =>
-          context.authenticated ? <p>Authenticated</p> : <p>Please login</p>
-        }
-      </AuthContext.Consumer>
+      {isAuth.authenticated ? <p>Authenticated</p> : <p>Please login</p>}
 
       {personLength}
 
