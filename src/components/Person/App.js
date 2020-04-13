@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import '../../css/Person.css';
 import Person from './Person';
+import Cockpit from './Cockpit';
 import styled from 'styled-components';
+import AuthContext from './context/auth-context';
 
 const PersonHeadline = styled.div`
   font-size: 1.2rem;
@@ -18,26 +20,10 @@ const PersonHeadline = styled.div`
   }
 `;
 
-const PersonToggle = styled.button`
-  box-shadow: 0 6px 8px -2px rgba(0, 0, 0, 0.2);
-  background-color: papayawhip;
-  margin-left: 3.32%;
-  border: 0;
-  outline: none;
-  height: 50px;
-  padding: 15px;
-  font-size: 1.1rem;
-
-  &:hover {
-    box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.2);
-    cursor: pointer;
-    background-color: pink;
-  }
-`;
-
 const App = () => {
   const [showPerson, setShowPerson] = useState(false);
   const [countPerson, setCountPerson] = useState(0);
+  const [auth, setAuth] = useState(false);
 
   const countPersonHandler = (count) => {
     setCountPerson(count);
@@ -47,12 +33,16 @@ const App = () => {
     setShowPerson(!showPerson ? true : false);
   };
 
+  const loginHandler = () => {
+    setAuth(true);
+  };
+
   const personDisplay = () => {
     if (!showPerson) {
       return null;
     }
 
-    return <Person count={countPersonHandler} />;
+    return <Person count={countPersonHandler} isAuth={auth} />;
   };
 
   const renderSpan = (countPerson) => {
@@ -62,13 +52,17 @@ const App = () => {
 
   return (
     <>
-      <PersonHeadline>
-        <PersonToggle onClick={togglePersonHandler}>Toggle</PersonToggle>
+      <AuthContext.Provider
+        value={{ authenticated: auth, login: loginHandler }}
+      >
+        <PersonHeadline>
+          <Cockpit click={togglePersonHandler} />
 
-        {renderSpan(countPerson)}
-      </PersonHeadline>
+          {renderSpan(countPerson)}
+        </PersonHeadline>
 
-      {personDisplay()}
+        {personDisplay()}
+      </AuthContext.Provider>
     </>
   );
 };

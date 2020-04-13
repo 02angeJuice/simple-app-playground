@@ -1,18 +1,47 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
 import Aux from '../../hoc/Aux';
-import WitchClass from '../../hoc/WithClass';
+import withClass from '../../hoc/withClass';
+import AuthContext from './context/auth-context';
 
-const PersonItem = ({ name, like, click, change, personLength }) => {
+const PersonItem = ({
+  isAuthActive,
+  name,
+  like,
+  click,
+  change,
+  personLength,
+}) => {
+  let inputElementRef = useRef();
+
+  useEffect(() => {
+    inputElementRef.current.focus();
+  });
+
   return (
-    <WitchClass classes="person-item">
+    <Aux>
+      <AuthContext.Consumer>
+        {(context) =>
+          context.authenticated ? <p>Authenticated</p> : <p>Please login</p>
+        }
+      </AuthContext.Consumer>
+
       {personLength}
+
       <p onClick={click}>
         {like} {name}
       </p>
 
-      <input type="text" onChange={change} value={name} />
-    </WitchClass>
+      <input ref={inputElementRef} type="text" onChange={change} value={name} />
+    </Aux>
   );
 };
 
-export default PersonItem;
+PersonItem.propTypes = {
+  click: PropTypes.func,
+  name: PropTypes.string,
+  like: PropTypes.string,
+  change: PropTypes.func,
+};
+
+export default withClass(PersonItem, 'person-item');
