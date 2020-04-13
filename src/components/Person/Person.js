@@ -13,18 +13,6 @@ const Person = ({ count }) => {
   const getPersons = usePersons();
   const [persons, setPersons] = useState([]);
 
-  // useEffect(() => {
-  //   console.log('person use test');
-
-  //   setTimeout(() => {
-  //     alert('save data');
-  //   }, 1000);
-
-  //   return () => {
-  //     console.log('run in effect');
-  //   };
-  // }, []);
-
   useEffect(() => {
     if (!persons.length) {
       setPersons(getPersons);
